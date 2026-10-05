@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Predictions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container result-box">
+      <h1>Saved Predictions</h1>
+      <nav class="page-nav">
+        <a class="button-link" href="/">New prediction</a>
+        <a class="button-link" href="/dashboard">Dashboard</a>
+      </nav>
+
+      <form action="/records" method="get" class="search-form">
+        <label for="search">Search by student name</label>
+        <input type="search" id="search" name="search" value="{{ search }}" placeholder="Enter a student name" />
+        <button type="submit">Search</button>
+        {% if search %}
+          <a class="button-link" href="/records">Clear search</a>
+        {% endif %}
+      </form>
+
+      {% if records %}
+        <table class="records-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Branch</th>
+              <th>Gender</th>
+              <th>Prediction</th>
+              <th>Confidence</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+              <tr>
+                <td>{{ record["student_name"] }}</td>
+                <td>{{ record["branch_name"] }}</td>
+                <td>{{ record["gender"] }}</td>
+                <td>{{ record["prediction"] }}</td>
+                <td>{{ record["confidence"] }}%</td>
+                <td>{{ record["created_at"] }}</td>
+                <td>
+                  <form action="{{ url_for('delete_record', record_id=record['id']) }}" method="post"
+                        onsubmit="return confirm('Delete this prediction record?');">
+                    <input type="hidden" name="search" value="{{ search }}" />
+                    <button class="delete-button" type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% elif search %}
+        <p>No student names matched “{{ search }}”.</p>
+      {% else %}
+        <p>No predictions saved yet.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

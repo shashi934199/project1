@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Performance Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Performance Predictor</h1>
+      <p class="subtitle">Estimate how a student is likely to perform based on study habits and academic indicators.</p>
+      <nav class="page-nav">
+        <a class="button-link" href="/dashboard">Dashboard</a>
+        <a class="button-link" href="/records">Saved predictions</a>
+      </nav>
+
+      {% if error %}
+        <div class="message error">{{ error }}</div>
+      {% endif %}
+
+      <form action="/predict" method="post" class="form-grid">
+        <div class="field">
+          <label for="StudentName">Student Name</label>
+          <input type="text" id="StudentName" name="StudentName" placeholder="Enter student name" required />
+        </div>
+
+        <div class="field">
+          <label for="BranchName">Branch Name</label>
+          <select id="BranchName" name="BranchName" required>
+            <option value="">Select branch</option>
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="MECH">MECH</option>
+            <option value="IT">IT</option>
+            <option value="CIVIL">CIVIL</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="Gender">Gender</label>
+          <select id="Gender" name="Gender" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="StudyHours">Study Hours per Day</label>
+          <input type="number" id="StudyHours" name="StudyHours" min="1" max="12" step="0.5" value="6" required />
+        </div>
+
+        <div class="field">
+          <label for="Attendance">Attendance (%)</label>
+          <input type="number" id="Attendance" name="Attendance" min="0" max="100" step="1" value="85" required />
+        </div>
+
+        <div class="field">
+          <label for="AssignmentScore">Assignment Score (%)</label>
+          <input type="number" id="AssignmentScore" name="AssignmentScore" min="0" max="100" step="1" value="80" required />
+        </div>
+
+        <div class="field">
+          <label for="SleepHours">Sleep Hours per Night</label>
+          <input type="number" id="SleepHours" name="SleepHours" min="4" max="12" step="0.5" value="7" required />
+        </div>
+
+        <div class="field">
+          <label for="TutoringHours">Tutoring Hours per Week</label>
+          <input type="number" id="TutoringHours" name="TutoringHours" min="0" max="10" step="0.5" value="2" required />
+        </div>
+
+        <div class="field">
+          <label for="ParentalSupport">Parental Support</label>
+          <select id="ParentalSupport" name="ParentalSupport">
+            <option value="1">Low</option>
+            <option value="2" selected>Medium</option>
+            <option value="3">High</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="StressLevel">Stress Level (1-10)</label>
+          <input type="number" id="StressLevel" name="StressLevel" min="1" max="10" step="1" value="5" required />
+        </div>
+
+        <button type="submit">Predict Performance</button>
+      </form>
+    </div>
+  </body>
+</html>

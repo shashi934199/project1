@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container result-box">
+      <h1>Prediction Dashboard</h1>
+      <nav class="page-nav">
+        <a class="button-link" href="/">New prediction</a>
+        <a class="button-link" href="/records">Saved predictions</a>
+      </nav>
+
+      <section class="dashboard-card">
+        <h2>Total Predictions</h2>
+        <p class="dashboard-total">{{ total_predictions }}</p>
+      </section>
+
+      <section class="breakdown">
+        <h2>Predictions by Branch</h2>
+        {% if branch_counts %}
+          <ul>
+            {% for branch_name, prediction_count in branch_counts %}
+              <li><span>{{ branch_name }}</span><strong>{{ prediction_count }}</strong></li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No predictions saved yet.</p>
+        {% endif %}
+      </section>
+    </div>
+  </body>
+</html>

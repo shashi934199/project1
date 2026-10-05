@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container result-box">
+      <h1>Prediction Result</h1>
+
+      <div class="result-card">
+        <p class="label">Predicted Performance</p>
+        <h2>{{ label }}</h2>
+        <p class="confidence">Confidence: {{ confidence }}%</p>
+      </div>
+
+      <div class="breakdown">
+        <h3>Class probabilities</h3>
+        <ul>
+          {% for name, probability in probabilities.items() %}
+            <li><span>{{ name }}</span> <strong>{{ probability * 100 }}%</strong></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="summary">
+        <h3>Input summary</h3>
+        <p>Student Name: {{ profile["StudentName"] }} | Branch: {{ profile["BranchName"] }}</p>
+        <p>Gender: {{ profile["Gender"] }}</p>
+        <p>Study Hours: {{ payload["StudyHours"] }} | Attendance: {{ payload["Attendance"] }}%</p>
+        <p>Assignment Score: {{ payload["AssignmentScore"] }}% | Sleep Hours: {{ payload["SleepHours"] }}</p>
+        <p>Tutoring Hours: {{ payload["TutoringHours"] }} | Parental Support: {{ payload["ParentalSupport"] }} | Stress Level: {{ payload["StressLevel"] }}</p>
+      </div>
+
+      <a class="button-link" href="/">Try another student</a>
+    </div>
+  </body>
+</html>
